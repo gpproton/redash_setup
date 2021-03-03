@@ -36,7 +36,6 @@ create_config() {
     echo "REDASH_SECRET_KEY=$SECRET_KEY" >> $REDASH_BASE_PATH/env
     echo "REDASH_DATABASE_URL=$REDASH_DATABASE_URL" >> $REDASH_BASE_PATH/env
 
-    echo "REDASH_MULTI_ORG=true" >> $REDASH_BASE_PATH/env
     echo "REDASH_FEATURE_ALLOW_CUSTOM_JS_VISUALIZATIONS=true" >> $REDASH_BASE_PATH/env
     echo "REDASH_FEATURE_SHOW_PERMISSIONS_CONTROL=true" >> $REDASH_BASE_PATH/env
     echo "REDASH_BIGQUERY_HTTP_TIMEOUT=2100" >> $REDASH_BASE_PATH/env
@@ -56,10 +55,9 @@ setup_compose() {
     cp -nf Dockerfile $REDASH_BASE_PATH/Dockerfile
     export COMPOSE_PROJECT_NAME=redash
     export COMPOSE_FILE=/opt/redash/docker-compose.yml
-    sudo docker-compose -f $COMPOSE_FILE run --rm server create_db
-    sudo docker-compose -f $COMPOSE_FILE up -d
+    sudo docker-compose -f $COMPOSE_FILE run --rm server create_db \
+    && sudo docker-compose -f $COMPOSE_FILE up -d
 }
-
 
 create_directories
 create_config
