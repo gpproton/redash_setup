@@ -58,3 +58,7 @@ setup_compose() {
     sudo docker-compose run --rm server create_db
     sudo docker-compose up -d
 }
+
+create_directories
+create_config
+setup_compose
