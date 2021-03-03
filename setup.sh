@@ -52,14 +52,15 @@ create_config() {
 }
 
 setup_compose() {
-    mv -f docker-compose.yml /opt/redash/docker-compose.yml
-    echo "export COMPOSE_PROJECT_NAME=redash" >> ~/.profile
-    echo "export COMPOSE_FILE=/opt/redash/docker-compose.yml" >> ~/.profile
+    cp -nf docker-compose.yml $REDASH_BASE_PATH/docker-compose.yml
+#    echo "export COMPOSE_PROJECT_NAME=redash" >> ~/.profile
+#    echo "export COMPOSE_FILE=/opt/redash/docker-compose.yml" >> ~/.profile
     export COMPOSE_PROJECT_NAME=redash
     export COMPOSE_FILE=/opt/redash/docker-compose.yml
-    sudo docker-compose run --rm server create_db
-    sudo docker-compose up -d
+    sudo docker-compose -f $COMPOSE_FILE run --rm server create_db
+    sudo docker-compose -f $COMPOSE_FILE up -d
 }
+
 
 create_directories
 create_config
