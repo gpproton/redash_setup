@@ -5,6 +5,8 @@ set -eu
 REDASH_BASE_PATH=/opt/redash
 
 create_directories() {
+    rm -rf $REDASH_BASE_PATH
+    
     if [[ ! -e $REDASH_BASE_PATH ]]; then
         sudo mkdir -p $REDASH_BASE_PATH
         sudo chown $USER:$USER $REDASH_BASE_PATH
