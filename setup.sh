@@ -25,7 +25,7 @@ create_config() {
 
     COOKIE_SECRET=$(pwgen -1s 32)
     SECRET_KEY=$(pwgen -1s 32)
-    POSTGRES_PASSWORD=$(pwgen -1s 32)
+    POSTGRES_PASSWORD=postgres
     REDASH_DATABASE_URL="postgresql://postgres:${POSTGRES_PASSWORD}@postgres/postgres"
 
     echo "PYTHONUNBUFFERED=0" >> $REDASH_BASE_PATH/env
@@ -53,8 +53,7 @@ create_config() {
 
 setup_compose() {
     cp -nf docker-compose.yml $REDASH_BASE_PATH/docker-compose.yml
-#    echo "export COMPOSE_PROJECT_NAME=redash" >> ~/.profile
-#    echo "export COMPOSE_FILE=/opt/redash/docker-compose.yml" >> ~/.profile
+    cp -nf Dockerfile $REDASH_BASE_PATH/Dockerfile
     export COMPOSE_PROJECT_NAME=redash
     export COMPOSE_FILE=/opt/redash/docker-compose.yml
     sudo docker-compose -f $COMPOSE_FILE run --rm server create_db
